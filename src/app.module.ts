@@ -23,6 +23,8 @@ import { VideosModule } from './modules/videos/videos.module.js';
 import { GalleriesModule } from './modules/galleries/galleries.module.js';
 import { GalleryImagesModule } from './modules/gallery-images/gallery-images.module.js';
 import { ContactMessagesModule } from './modules/contact-messages/contact-messages.module.js';
+import { CustomPagesModule } from './modules/custom-pages/custom-pages.module.js';
+import { CustomPageImagesModule } from './modules/custom-page-images/custom-page-images.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -59,6 +61,8 @@ import { AppService } from './app.service.js';
     GalleriesModule,
     GalleryImagesModule,
     ContactMessagesModule,
+    CustomPagesModule,
+    CustomPageImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
