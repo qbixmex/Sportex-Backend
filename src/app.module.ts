@@ -18,6 +18,7 @@ import { FieldsModule } from './modules/fields/fields.module.js';
 import { PlayersModule } from './modules/players/players.module.js';
 import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
 import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
+import { HeroBannersModule } from './modules/hero-banners/hero-banners.module.js';
 import { VideosModule } from './modules/videos/videos.module.js';
 import { GalleriesModule } from './modules/galleries/galleries.module.js';
 import { GalleryImagesModule } from './modules/gallery-images/gallery-images.module.js';
@@ -51,6 +52,7 @@ import { AppService } from './app.service.js';
     CoachesModule,
     FieldsModule,
     SponsorsModule,
+    HeroBannersModule,
     AnnouncementsModule,
     VideosModule,
     GalleriesModule,
