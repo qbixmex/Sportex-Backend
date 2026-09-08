@@ -48,6 +48,7 @@ export class AuthService {
         email: true,
         password: true,
         imageUrl: true,
+        roles: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -63,13 +64,13 @@ export class AuthService {
       throw new UnauthorizedException('¡ Las credenciales son incorrectas !');
     }
 
-    const data = Object.fromEntries(
+    const userWithoutPassword = Object.fromEntries(
       Object.entries(user).filter(([key]) => key !== 'password')
     );
 
     return {
       message: 'Usuario autentificado satisfactoriamente 👍🎉',
-      data,
+      user: userWithoutPassword,
       token: this.getJwtToken({ id: user.id }),
     };
   }
