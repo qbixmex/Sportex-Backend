@@ -29,21 +29,21 @@ export class Announcement {
 
   @Column({
     type: 'timestamptz',
-    name: 'publishedAt',
+    name: 'published_at',
     nullable: true,
   })
   publishedAt?: Date;
 
   @Column({
     type: 'varchar',
-    name: 'imageUrl',
+    name: 'image_url',
     nullable: true,
   })
   imageUrl?: string;
 
   @Column({
     type: 'varchar',
-    name: 'imagePublicId',
+    name: 'image_public_id',
     nullable: true,
   })
   imagePublicId?: string;
