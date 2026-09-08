@@ -12,6 +12,9 @@ import { validate as isUUID } from 'uuid';
 import { CommonService } from '../common/common.service.js';
 import type { ResponseTournamentList, TOURNAMENT_TYPE } from './types/tournament_list.type.ts';
 import type { FetchTournamentResponse } from './types/tournament.type.ts';
+import type { CreateTournamentResponse } from './types/tournament_create.type.ts';
+import type { UpdateTournamentResponse } from './types/tournament_update.type.ts';
+import type { DeleteTournamentResponse } from './types/tournament_remove.type.ts';
 
 @Injectable()
 export class TournamentsService {
@@ -117,7 +120,7 @@ export class TournamentsService {
     };
   }
 
-  async create(dto: CreateTournamentDto) {
+  async create(dto: CreateTournamentDto): Promise<CreateTournamentResponse> {
     const tournamentNameCount = await this.tournamentRepository.count({
       where: { name: dto.name },
     });
@@ -154,7 +157,7 @@ export class TournamentsService {
     }
   }
 
-  async update(id: string, dto: UpdateTournamentDto) {
+  async update(id: string, dto: UpdateTournamentDto): Promise<UpdateTournamentResponse> {
     const tournament = await this.tournamentRepository.findOne({
       where: { id },
     });
@@ -179,7 +182,7 @@ export class TournamentsService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<DeleteTournamentResponse> {
     const tournament = await this.tournamentRepository.findOne({
       where: { id },
     });

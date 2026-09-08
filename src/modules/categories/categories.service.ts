@@ -6,6 +6,11 @@ import { CreateCategoryDto, UpdateCategoryDto } from './dto/index.js';
 import { Category } from './entities/category.entity.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { CommonService } from '../common/common.service.js';
+import type { ResponseCategoriesList } from './types/categories_list.type.ts';
+import type { FetchCategoryResponse } from './types/category.type.ts';
+import type { CreateCategoryResponse } from './types/category_create.type.ts';
+import type { UpdateCategoryResponse } from './types/category_update.type.ts';
+import type { DeleteCategoryResponse } from './types/category_remove.type.ts';
 
 @Injectable()
 export class CategoriesService {
@@ -15,12 +20,17 @@ export class CategoriesService {
     private readonly commonService: CommonService,
   ) { }
 
-  async findAll({ page = 1, take = 10 }: PaginationDto) {
+  async findAll({ page = 1, take = 10 }: PaginationDto): Promise<ResponseCategoriesList> {
     const [categoriesCount, categories] = await Promise.all([
       this.categoryRepository.count(),
       this.categoryRepository.find({
         take,
         skip: (page - 1) * take,
+        select: {
+          id: true,
+          name: true,
+          permalink: true,
+        },
       }),
     ]);
 
@@ -33,7 +43,32 @@ export class CategoriesService {
     };
   }
 
-  async create(dto: CreateCategoryDto) {
+  async findById(id: string): Promise<FetchCategoryResponse> {
+    let category: Category | null = null;
+
+    if (isUUID(id)) {
+      category = await this.categoryRepository.findOneBy({ id });
+    } else {
+      const queryBuilder = this.categoryRepository.createQueryBuilder();
+      category = await queryBuilder
+        .where('permalink = :permalink', { permalink: id.toLowerCase() })
+        .getOne();
+    }
+
+    if (!category) {
+      throw new NotFoundException(
+        '¡ La categoría '
+        + (isUUID(id) ? 'id ' : 'enlace permanente ')
+        + `[${id}] no existe en la base de datos !`
+      );
+    }
+
+    return {
+      category
+    };
+  }
+
+  async create(dto: CreateCategoryDto): Promise<CreateCategoryResponse> {
     const categoryNameCount = await this.categoryRepository.count({
       where: { name: dto.name },
     });
@@ -63,37 +98,14 @@ export class CategoriesService {
 
       return {
         message: '¡ Categoría creada satisfactoriamente 👍 !',
-        data: newCategory,
+        category: newCategory,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
     }
   }
 
-  async findById(id: string) {
-    let category: Category | null = null;
-
-    if (isUUID(id)) {
-      category = await this.categoryRepository.findOneBy({ id });
-    } else {
-      const queryBuilder = this.categoryRepository.createQueryBuilder();
-      category = await queryBuilder
-        .where('permalink = :permalink', { permalink: id.toLowerCase() })
-        .getOne();
-    }
-
-    if (!category) {
-      throw new NotFoundException(
-        '¡ La categoría '
-         + (isUUID(id) ? 'id ' : 'enlace permanente ')
-         + `[${id}] no existe en la base de datos !`
-      );
-    }
-
-    return category;
-  }
-
-  async update(id: string, dto: UpdateCategoryDto) {
+  async update(id: string, dto: UpdateCategoryDto): Promise<UpdateCategoryResponse> {
     const category = await this.categoryRepository.findOne({
       where: { id },
     });
@@ -111,14 +123,14 @@ export class CategoriesService {
 
       return {
         message: 'Categoría actualizada exitosamente 👍',
-        data: updatedCategory,
+        category: updatedCategory,
       }
     } catch (error) {
       this.commonService.handleExceptions(error);
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<DeleteCategoryResponse> {
     const category = await this.categoryRepository.findOne({
       where: { id },
     });
@@ -134,7 +146,6 @@ export class CategoriesService {
 
       return {
         message: 'Categoría eliminada satisfactoriamente 👍',
-        user: category,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
