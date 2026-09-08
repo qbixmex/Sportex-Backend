@@ -1,10 +1,11 @@
 {
   "name": "Sportex",
-  "version": "0.18.3",
+  "version": "0.18.4",
   "description": "Sports platform management system",
   "author": "Daniel González Briseño",
   "private": true,
   "license": "UNLICENSED",
+  "repository": "https://github.com/qbixmex/Sportex-Backend",
   "type": "module",
   "scripts": {
     "build": "nest build",
