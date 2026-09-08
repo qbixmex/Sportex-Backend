@@ -10,6 +10,8 @@ import { Tournament } from './entities/tournament.entity.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { validate as isUUID } from 'uuid';
 import { CommonService } from '../common/common.service.js';
+import type { ResponseTournamentList, TOURNAMENT_TYPE } from './types/tournament_list.type.ts';
+import type { FetchTournamentResponse } from './types/tournament.type.ts';
 
 @Injectable()
 export class TournamentsService {
@@ -19,20 +21,55 @@ export class TournamentsService {
     private readonly commonService: CommonService,
   ) { }
 
-  async findAll({ page = 1, take = 10 }: PaginationDto) {
+  async findAll({ page = 1, take = 10 }: PaginationDto): Promise<ResponseTournamentList> {
     try {
-      const [tournamentsCount, tournaments] = await Promise.all([
-        this.tournamentRepository.count(),
-        this.tournamentRepository.find({
-          take,
-          skip: (page - 1) * take,
-        }),
-      ]);
+      const [tournamentsData, tournamentsCount] = await this.tournamentRepository.findAndCount({
+        take,
+        skip: (page - 1) * take,
+        select: {
+          id: true,
+          name: true,
+          permalink: true,
+          imageUrl: true,
+          season: true,
+          startDate: true,
+          endDate: true,
+          active: true,
+        },
+      });
+
+      const categoryCounts = await this.tournamentRepository
+        .createQueryBuilder('tournament')
+        .leftJoin('tournament.categories', 'category')
+        .select('tournament.id', 'tournamentId')
+        .addSelect('COUNT(category.id)', 'count')
+        .where('tournament.id IN (:...ids)', { ids: tournamentsData.map((t) => t.id) })
+        .groupBy('tournament.id')
+        .getRawMany();
+
+      const countByTournamentId = new Map(
+        categoryCounts.map((c) => [c.tournamentId, Number(c.count)])
+      );
+
+      const tournaments: TOURNAMENT_TYPE[] = tournamentsData.map((tournament) => {
+        return {
+          id: tournament.id,
+          name: tournament.name,
+          permalink: tournament.permalink,
+          imageUrl: tournament.imageUrl,
+          stage: tournament.stage,
+          season: tournament.season,
+          startDate: tournament.startDate,
+          endDate: tournament.endDate,
+          active: tournament.active,
+          categoriesQuantity: countByTournamentId.get(tournament.id) ?? 0,
+        };
+      });
 
       return {
         tournaments,
         pagination: {
-        currentPage: +page,
+          currentPage: +page,
           totalPages: Math.ceil(tournamentsCount / take),
         },
       };
@@ -41,12 +78,11 @@ export class TournamentsService {
     }
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<FetchTournamentResponse> {
     const queryBuilder = this.tournamentRepository
       .createQueryBuilder('tournament')
       .leftJoin('tournament.categories', 'category')
       .addSelect(['category.id', 'category.name', 'category.permalink']);
-
 
     if (isUUID(id)) {
       queryBuilder.where('tournament.id = :id', { id });
@@ -66,7 +102,19 @@ export class TournamentsService {
       );
     }
 
-    return tournament;
+    const teamsCountRow = await this.tournamentRepository
+      .createQueryBuilder('tournament')
+      .innerJoin('tournament.teams', 'team')
+      .select('COUNT(team.id)', 'total')
+      .where('tournament.id = :tournamentId', { tournamentId: id })
+      .getRawOne<{ total: string }>();
+
+    return {
+      tournament: {
+        ...tournament,
+        teamsQuantity: Number(teamsCountRow?.total ?? 0),
+      },
+    };
   }
 
   async create(dto: CreateTournamentDto) {
@@ -99,7 +147,7 @@ export class TournamentsService {
 
       return {
         message: '¡ Torneo creado satisfactoriamente 👍 !',
-        data: newTournament
+        tournament: newTournament,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -124,7 +172,7 @@ export class TournamentsService {
 
       return {
         message: 'Torneo actualizado exitosamente 👍',
-        data: updatedTournament,
+        tournament: updatedTournament,
       }
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -147,7 +195,6 @@ export class TournamentsService {
 
       return {
         message: 'Torneo eliminado satisfactoriamente 👍',
-        user: tournament,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
