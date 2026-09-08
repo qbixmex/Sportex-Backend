@@ -27,28 +27,28 @@ export class Sponsor {
 
   @Column({
     type: 'varchar',
-    name: 'imageUrl',
+    name: 'image_url',
     nullable: true,
   })
   imageUrl?: string;
 
   @Column({
     type: 'varchar',
-    name: 'imagePublicId',
+    name: 'image_public_id',
     nullable: true,
   })
   imagePublicId?: string;
 
   @Column({
     type: 'date',
-    name: 'startDate',
+    name: 'start_date',
     nullable: true,
   })
   startDate?: Date;
 
   @Column({
     type: 'date',
-    name: 'endDate',
+    name: 'end_date',
     nullable: true,
   })
   endDate?: Date;
