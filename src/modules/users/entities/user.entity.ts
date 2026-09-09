@@ -73,6 +73,14 @@ export class User {
   })
   isActive?: boolean;
 
+  @Column({
+    type: 'varchar',
+    name: 'roles',
+    array: true,
+    default: ['user'],
+  })
+  roles!: string[];
+
   @CreateDateColumn({
     name: 'created_at',
   })
@@ -83,14 +91,6 @@ export class User {
     nullable: true,
   })
   updatedAt?: Date;
-
-  @Column({
-    type: 'varchar',
-    name: 'roles',
-    array: true,
-    default: ['user'],
-  })
-  roles!: string[];
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {
