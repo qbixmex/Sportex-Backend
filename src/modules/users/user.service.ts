@@ -26,10 +26,8 @@ export class UserService {
           email: true,
           emailVerified: true,
           imageUrl: true,
-          imagePublicId: true,
+          roles: true,
           isActive: true,
-          createdAt: true,
-          updatedAt: true,
         },
         take,
         skip: (page - 1) * take,
@@ -54,7 +52,8 @@ export class UserService {
         username: true,
         email: true,
         imageUrl: true,
-        imagePublicId: true,
+        roles: true,
+        emailVerified: true,
         isActive: true,
         createdAt: true,
         updatedAt: true,
@@ -65,7 +64,9 @@ export class UserService {
       throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
     }
 
-    return user;
+    return {
+      user
+    };
   }
 
   async findByUsername(username: string) {

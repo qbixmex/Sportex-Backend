@@ -21,7 +21,7 @@ export class TransformInterceptor<T> implements NestInterceptor {
       map((data: T) => ({
         statusCode,
         message: 'Success',
-        data,
+        ...data,
       }))
     );
   }
