@@ -14,7 +14,6 @@ import { CreateUserDto, UpdateUserDto } from './dto/index.js';
 import { UserService } from './user.service.js';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
-import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { SearchParamsDto } from '../common/dto/search-params.dto.js';
 
 @Controller('users')
