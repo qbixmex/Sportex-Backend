@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto/index.js';
 import { User } from './entities/user.entity.js';
-import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { CommonService } from '../common/common.service.js';
+import { SearchParamsDto } from '../common/dto/search-params.dto.js';
 
 @Injectable()
 export class UserService {
@@ -15,10 +15,19 @@ export class UserService {
     private readonly commonService: CommonService,
   ) { }
 
-  async findAll({ page = 1, take = 10 }: PaginationDto) {
+  async findAll({ searchTerm, page = 1, take = 10 }: SearchParamsDto) {
+    const where = searchTerm
+      ? [
+        { name: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
+        { username: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
+        { email: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
+      ]
+      : undefined;
+
     const [usersCount, users] = await Promise.all([
       this.userRepository.count(),
       this.userRepository.find({
+        where,
         select: {
           id: true,
           name: true,
@@ -93,7 +102,7 @@ export class UserService {
       }
 
       return user;
-    } catch(error) {
+    } catch (error) {
       this.commonService.handleExceptions(error);
     }
   }

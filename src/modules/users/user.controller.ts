@@ -15,6 +15,7 @@ import { UserService } from './user.service.js';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { SearchParamsDto } from '../common/dto/search-params.dto.js';
 
 @Controller('users')
 @Auth(VALID_ROLES.ADMIN)
@@ -23,8 +24,8 @@ export class UserController {
 
   @Version('1')
   @Get()
-  getUsers(@Query() paginationDto: PaginationDto) {
-    return this.userService.findAll(paginationDto);
+  getUsers(@Query() searchParamsDto: SearchParamsDto) {
+    return this.userService.findAll(searchParamsDto);
   }
 
   @Version('1')
