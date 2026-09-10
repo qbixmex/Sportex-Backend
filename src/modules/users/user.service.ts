@@ -124,7 +124,7 @@ export class UserService {
 
       return {
         message: 'Usuario creado satisfactoriamente 👍',
-        data: {
+        user: {
           id: newUser.id,
           name: newUser.name,
           username: newUser.username,
@@ -182,7 +182,7 @@ export class UserService {
 
       return {
         message: 'Usuario actualizado exitosamente 👍',
-        data: updatedUser,
+        user: updatedUser,
       }
     } catch (error) {
       this.commonService.handleExceptions(error);
