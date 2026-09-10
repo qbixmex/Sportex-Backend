@@ -15,12 +15,12 @@ export class UserService {
     private readonly commonService: CommonService,
   ) { }
 
-  async findAll({ searchTerm, page = 1, take = 10 }: SearchParamsDto) {
-    const where = searchTerm
+  async findAll({ search_term, page = 1, take = 10 }: SearchParamsDto) {
+    const where = search_term
       ? [
-        { name: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
-        { username: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
-        { email: ILike(`%${searchTerm.toLocaleLowerCase()}%`) },
+        { name: ILike(`%${search_term.toLocaleLowerCase()}%`) },
+        { username: ILike(`%${search_term.toLocaleLowerCase()}%`) },
+        { email: ILike(`%${search_term.toLocaleLowerCase()}%`) },
       ]
       : undefined;
 
