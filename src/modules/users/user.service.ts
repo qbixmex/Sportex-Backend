@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { hashSync } from 'bcryptjs';
+import { compareSync, hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto/index.js';
 import { User } from './entities/user.entity.js';
 import { CommonService } from '../common/common.service.js';
@@ -143,22 +143,11 @@ export class UserService {
   }
 
   async update(id: string, dto: UpdateUserDto) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        username: true,
-        email: true,
-        emailVerified: true,
-        imageUrl: true,
-        imagePublicId: true,
-        roles: true,
-        isActive: true,
-        createdAt: true,
-        updatedAt: true,
-      }
-    });
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .addSelect('user.password')
+      .getOne();
 
     if (!user) {
       throw new NotFoundException(
@@ -166,23 +155,30 @@ export class UserService {
       );
     }
 
-    const updatedUser = this.userRepository.merge(user, {
-      name: dto.name,
-      username: dto.username,
-      email: dto.email,
-      emailVerified: dto.emailVerified,
-      imageUrl: dto.imageUrl,
-      imagePublicId: dto.imagePublicId,
-      isActive: dto.isActive,
-      roles: dto.roles,
-    });
+    const { password, ...dtoWithoutPassword } = dto;
+
+    const fields = Object.fromEntries(
+      Object
+        .entries(dtoWithoutPassword)
+        .filter(([, value]) => value !== undefined)
+    );
+
+    if (password && !compareSync(password, user.password)) {
+      fields.password = hashSync(password, 10);
+    }
+
+    const updatedUser = this.userRepository.merge(user, fields);
 
     try {
       await this.userRepository.save(updatedUser);
 
+      const outputUser = Object.fromEntries(
+        Object.entries(updatedUser).filter(entry => entry[0] !== 'password'),
+      ) as Omit<User, 'password'>;
+
       return {
         message: 'Usuario actualizado exitosamente 👍',
-        user: updatedUser,
+        user: outputUser,
       }
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -214,7 +210,6 @@ export class UserService {
 
       return {
         message: 'Usuario eliminado satisfactoriamente 👍',
-        user,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
