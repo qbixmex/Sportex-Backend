@@ -1,7 +1,6 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreateUserDto } from "./create-user.dto.js";
-import { IsArray, IsBoolean, IsEnum, IsOptional } from "class-validator";
-import { VALID_ROLES } from "../../auth/enums/index.js";
+import { IsBoolean, IsOptional } from "class-validator";
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsBoolean({ message: '¡ La propiedad debe ser del tipo boleano !' })

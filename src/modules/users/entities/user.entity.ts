@@ -93,18 +93,18 @@ export class User {
   updatedAt?: Date;
 
   @BeforeInsert()
-  checkFieldsBeforeInsert() {
+  private checkFieldsBeforeInsert() {
     this.checkFields();
   }
 
   @BeforeUpdate()
-  checkFieldsBeforeUpdate() {
+  private checkFieldsBeforeUpdate() {
     this.checkFields();
   }
 
   private checkFields() {
     if (this.email) {
-      this.email = this.email.toLowerCase().trim();
+      this.email = this.email.toLowerCase();
     }
     if (this.password) {
       this.password = this.password.trim();
