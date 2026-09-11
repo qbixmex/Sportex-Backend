@@ -1,6 +1,8 @@
 import {
+  IsArray,
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -8,6 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from "class-validator";
+import { VALID_ROLES } from "../../auth/enums/valid-roles.enum.js";
 
 export class CreateUserDto {
   @IsString({ message: '¡ El email debe ser una cadena de texto !' })
@@ -40,6 +43,14 @@ export class CreateUserDto {
   @IsOptional()
   @MinLength(1, { message: '¡ El id público debe ser mínimo de 1 caracter !' })
   imagePublicId?: string;
+
+  @IsArray()
+  @IsOptional()
+  @IsEnum(VALID_ROLES, {
+    each: true,
+    message: '¡ Los roles deben ser "admin" ó "user" !',
+  })
+  roles?: string[];
 
   @IsBoolean({ message: '¡ La propiedad activo debe ser del tipo boleano !' })
   @IsOptional()
