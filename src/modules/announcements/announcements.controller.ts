@@ -10,6 +10,7 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -18,6 +19,7 @@ import { CreateAnnouncementDto } from './dto/create-announcement.dto.js';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Announcements')
 @Controller('announcements')
 export class AnnouncementsController {
   constructor(private readonly announcementsService: AnnouncementsService) {}

@@ -10,6 +10,7 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -17,8 +18,9 @@ import { CustomPageImagesService } from './custom-page-images.service.js';
 import { CreateCustomPageImageDto } from './dto/create-custom-page-image.dto.js';
 import { UpdateCustomPageImageDto } from './dto/update-custom-page-image.dto.js';
 
-@Controller('admin/custom-pages/:pageId/images')
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Custom Pages Images')
+@Controller('admin/custom-pages/:pageId/images')
 export class CustomPageImagesController {
   constructor(
     private readonly customPageImagesService: CustomPageImagesService,

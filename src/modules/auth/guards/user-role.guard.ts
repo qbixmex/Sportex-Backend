@@ -22,7 +22,7 @@ export class UserRoleGuard implements CanActivate {
     const user = request.user as User;
 
     if (!user) {
-      throw new BadRequestException('¡ Usuario no encontrado !');
+      throw new BadRequestException('Usuario no encontrado');
     }
 
     if (validRoles.length > 0) {
@@ -36,7 +36,7 @@ export class UserRoleGuard implements CanActivate {
     }
 
     throw new ForbiddenException(
-      '¡ No estas autorizado para realizar esta acción !'
+      'No estas autorizado para realizar esta acción'
     );
   }
 }

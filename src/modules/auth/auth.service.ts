@@ -30,7 +30,7 @@ export class AuthService {
       await this.userRepository.save(newUser);
 
       return {
-        message: 'El registro fue realizado exitosamente 👍',
+        message: 'El registro fue realizado exitosamente',
         token: this.getJwtToken({ id: newUser.id }),
       };
     } catch (error) {
@@ -55,13 +55,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('¡ Las credenciales son incorrectas !');
+      throw new UnauthorizedException('Las credenciales son incorrectas');
     }
 
     const passwordsMatches = compareSync(dto.password, user.password);
 
     if (!passwordsMatches) {
-      throw new UnauthorizedException('¡ Las credenciales son incorrectas !');
+      throw new UnauthorizedException('Las credenciales son incorrectas');
     }
 
     const userWithoutPassword = Object.fromEntries(
@@ -69,7 +69,7 @@ export class AuthService {
     );
 
     return {
-      message: 'Usuario autentificado satisfactoriamente 👍🎉',
+      message: 'Usuario autentificado satisfactoriamente',
       user: userWithoutPassword,
       token: this.getJwtToken({ id: user.id }),
     };

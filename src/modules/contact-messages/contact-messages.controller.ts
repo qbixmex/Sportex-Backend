@@ -9,12 +9,14 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { ContactMessagesService } from './contact-messages.service.js';
 import { UpdateContactMessageReadDto } from './dto/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 
+@ApiTags('Contact Messages')
 @Controller('contact-messages')
 @Auth(VALID_ROLES.ADMIN)
 export class ContactMessagesController {

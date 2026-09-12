@@ -10,6 +10,7 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -18,6 +19,7 @@ import { CreateVideoDto } from './dto/create-video.dto.js';
 import { UpdateVideoDto } from './dto/update-video.dto.js';
 
 @Controller('videos')
+@ApiTags('Videos')
 @Auth(VALID_ROLES.ADMIN)
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}

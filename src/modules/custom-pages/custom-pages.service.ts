@@ -51,7 +51,7 @@ export class CustomPagesService {
 
     if (!customPage) {
       throw new NotFoundException(
-        `¡ La página personalizada con id: [${id}], no existe en la base de datos !`
+        'La página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -66,7 +66,7 @@ export class CustomPagesService {
 
       if (!permalink) {
         throw new BadRequestException(
-          '¡ El enlace permanente no puede quedar vacío después de normalizarse !'
+          'El enlace permanente no puede quedar vacío después de normalizarse'
         );
       }
 
@@ -76,7 +76,7 @@ export class CustomPagesService {
   
       if (existingCustomPage > 0) {
         throw new ConflictException(
-          `¡ La página personalizada con el enlace permanente [${permalink}] ya existe, elija otro permalink !`
+          `La página personalizada con el enlace permanente [${permalink}] ya existe, elija otro permalink`
         );
       }
     }
@@ -91,7 +91,7 @@ export class CustomPagesService {
       await this.customPageRepository.save(customPage);
 
       return {
-        message: '¡ Página personalizada fue creada satisfactoriamente 👍 !',
+        message: 'Página personalizada fue creada satisfactoriamente',
         customPage,
       };
     } catch (error) {
@@ -106,7 +106,7 @@ export class CustomPagesService {
 
     if (!customPage) {
       throw new NotFoundException(
-        `¡ La página personalizada con id: [${id}], no existe en la base de datos !`
+        'La página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -118,7 +118,7 @@ export class CustomPagesService {
 
       if (!permalink) {
         throw new BadRequestException(
-          '¡ El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú" !'
+          'El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú"'
         );
       }
 
@@ -142,7 +142,7 @@ export class CustomPagesService {
 
       if (existingCustomPage > 0) {
         throw new ConflictException(
-          `¡ La página personalizada con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink !`
+          `La página personalizada con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink`
         );
       }
     }
@@ -156,7 +156,7 @@ export class CustomPagesService {
       await this.customPageRepository.save(updatedCustomPage);
 
       return {
-        message: '¡ Página personalizada fue actualizada exitosamente 👍 !',
+        message: 'Página personalizada fue actualizada exitosamente',
         customPage: updatedCustomPage,
       };
     } catch (error) {
@@ -171,7 +171,7 @@ export class CustomPagesService {
 
     if (!customPage) {
       throw new NotFoundException(
-        `¡ La página personalizada con id: [${id}], no existe en la base de datos !`
+        'La página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -179,7 +179,7 @@ export class CustomPagesService {
       await this.customPageRepository.remove(customPage);
 
       return {
-        message: '¡ Página personalizada eliminada satisfactoriamente 👍 !',
+        message: 'Página personalizada eliminada satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -232,7 +232,7 @@ export class CustomPagesService {
 
     if (!customPage) {
       throw new NotFoundException(
-        `¡ La página personalizada publicada con enlace permanente [${parsedPermalink}], no existe en la base de datos !`
+        'La página personalizada no existe'
       );
     }
 

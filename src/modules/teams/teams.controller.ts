@@ -10,6 +10,7 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TeamsService } from './teams.service.js';
 import { CreateTeamDto, UpdateTeamDto } from './dto/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -17,6 +18,7 @@ import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Teams')
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}

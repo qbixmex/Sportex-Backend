@@ -58,7 +58,7 @@ export class GalleryImagesService {
 
     if (!galleryImage) {
       throw new NotFoundException(
-        `¡ La imagen de galería con id: [${id}], no existe en la base de datos !`
+        'La imagen de galería no existe con el identificador proporcionado'
       );
     }
 
@@ -74,7 +74,7 @@ export class GalleryImagesService {
 
     if (galleryImageExists > 0) {
       throw new ConflictException(
-        `¡ La imagen con el url [${dto.imageUrl}] ya existe, elija otro url !`
+        `La imagen con el url [${dto.imageUrl}] ya existe, elija otro url`
       );
     }
 
@@ -89,7 +89,7 @@ export class GalleryImagesService {
       const galleryImage = this.stripGallery(galleryImageRaw);
 
       return {
-        message: '¡ Imagen de galería creada satisfactoriamente 👍 !',
+        message: 'Imagen de galería creada satisfactoriamente',
         galleryImage,
       };
     } catch (error) {
@@ -106,7 +106,7 @@ export class GalleryImagesService {
 
     if (!galleryImage) {
       throw new NotFoundException(
-        `¡ La imagen de galería con id: [${id}], no existe en la base de datos !`
+        'La imagen de galería no existe con el identificador proporcionado'
       );
     }
 
@@ -117,7 +117,7 @@ export class GalleryImagesService {
 
       if (existingImage && existingImage.id !== id) {
         throw new ConflictException(
-          `¡ La imagen con el url [${dto.imageUrl}] ya existe, elija otro url !`
+          `La imagen con el url [${dto.imageUrl}] ya existe, elija otro url`
         );
       }
     }
@@ -131,7 +131,7 @@ export class GalleryImagesService {
       await this.galleryImageRepository.save(updatedGalleryImage);
 
       return {
-        message: '¡ Imagen de galería actualizada exitosamente 👍 !',
+        message: 'Imagen de galería actualizada exitosamente',
         galleryImage: this.stripGallery(updatedGalleryImage),
       };
     } catch (error) {
@@ -148,7 +148,7 @@ export class GalleryImagesService {
 
     if (!galleryImage) {
       throw new NotFoundException(
-        `¡ La imagen de galería con id: [${id}], no existe en la base de datos !`
+        'La imagen de galería no existe con el identificador proporcionado'
       );
     }
 
@@ -156,7 +156,7 @@ export class GalleryImagesService {
       await this.galleryImageRepository.remove(galleryImage);
 
       return {
-        message: '¡ Imagen de galería eliminada satisfactoriamente 👍 !',
+        message: 'Imagen de galería eliminada satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -180,7 +180,7 @@ export class GalleryImagesService {
 
     if (!gallery) {
       throw new NotFoundException(
-        `¡ La galería con id: [${galleryId}], no existe en la base de datos !`
+        'La galería no existe con el identificador proporcionado'
       );
     }
 
