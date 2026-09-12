@@ -34,7 +34,7 @@ export class HeroBannersService {
 
     if (!heroBanner) {
       throw new NotFoundException(
-        `¡ El banner con id: [${id}], no existe en la base de datos !`
+        'El banner no existe con el identificador proporcionado'
       );
     }
 
@@ -48,7 +48,7 @@ export class HeroBannersService {
 
     if (existingHeroBanner) {
       throw new ConflictException(
-        `¡ El banner con el título [${dto.title}] ya existe, elija otro !`
+        `El banner con el título [${dto.title}] ya existe, elija otro`
       );
     }
 
@@ -56,7 +56,7 @@ export class HeroBannersService {
       const heroBanner = this.heroBannerRepository.create(dto);
       await this.heroBannerRepository.save(heroBanner);
       return {
-        message: '¡ El banner se ha creado correctamente 👍 !',
+        message: 'El banner se ha creado correctamente',
         heroBanner,
       };
     } catch (error) {
@@ -69,7 +69,7 @@ export class HeroBannersService {
 
     if (!heroBanner) {
       throw new NotFoundException(
-        `¡ El banner con id: [${id}], no existe en la base de datos !`
+        'El banner no existe con el identificador proporcionado'
       );
     }
 
@@ -80,7 +80,7 @@ export class HeroBannersService {
 
       if (existingHeroBanner) {
         throw new ConflictException(
-          `¡ El banner con el título [${dto.title}] ya existe, elija otro !`
+          `El banner con el título [${dto.title}] ya existe, elija otro`
         );
       }
     }
@@ -91,7 +91,7 @@ export class HeroBannersService {
       await this.heroBannerRepository.save(updatedHeroBanner);
 
       return {
-        message: 'El banner ha sido actualizado correctamente 👍',
+        message: 'El banner ha sido actualizado correctamente',
         heroBanner: updatedHeroBanner,
       };
     } catch (error) {
@@ -104,7 +104,7 @@ export class HeroBannersService {
 
     if (!heroBanner) {
       throw new NotFoundException(
-        `¡ El banner con el id [${id}], no existe en la base de datos !`
+        'El banner no existe con el identificador proporcionado'
       );
     }
 
@@ -112,7 +112,7 @@ export class HeroBannersService {
       await this.heroBannerRepository.remove(heroBanner);
 
       return {
-        message: 'El Banner ha sido eliminado correctamente 👍',
+        message: 'El Banner ha sido eliminado correctamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

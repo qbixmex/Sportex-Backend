@@ -66,7 +66,7 @@ export class CoachesService {
 
     if (!coach) {
       throw new NotFoundException(
-        `¡ El entrenador con id: [${id}], no existe en la base de datos !`
+        'El entrenador no existe con el identificador proporcionado'
       );
     }
 
@@ -85,7 +85,7 @@ export class CoachesService {
       }
 
       return {
-        message: '¡ Entrenador creado satisfactoriamente 👍 !',
+        message: 'Entrenador creado satisfactoriamente',
         data: savedCoach,
       };
     } catch (error) {
@@ -98,7 +98,7 @@ export class CoachesService {
 
     if (!coach) {
       throw new NotFoundException(
-        `¡ El entrenador con id: [${id}], no existe en la base de datos !`
+        'El entrenador no existe con el identificador proporcionado'
       );
     }
 
@@ -113,7 +113,7 @@ export class CoachesService {
       }
 
       return {
-        message: 'Entrenador actualizado exitosamente 👍',
+        message: 'Entrenador actualizado exitosamente',
         data: savedCoach,
       };
     } catch (error) {
@@ -126,7 +126,7 @@ export class CoachesService {
 
     if (!coach) {
       throw new NotFoundException(
-        `El entrenador con id: [${id}], no existe en la base de datos`
+        'El entrenador no existe con el identificador proporcionado'
       );
     }
 
@@ -143,7 +143,7 @@ export class CoachesService {
       await this.coachRepository.delete({ id: coach.id });
 
       return {
-        message: 'Entrenador eliminado satisfactoriamente 👍',
+        message: 'Entrenador eliminado satisfactoriamente',
         data: coach,
       };
     } catch (error) {
@@ -157,11 +157,7 @@ export class CoachesService {
     });
 
     if (teams.length !== teamIds.length) {
-      const found = new Set(teams.map((t) => t.id));
-      const missing = teamIds.filter((id) => !found.has(id));
-      throw new BadRequestException(
-        `¡ Los equipos con id [${missing.join(', ')}] no existen, elija otros !`
-      );
+      throw new BadRequestException('Algunos de los equipos seleccionados no existen');
     }
   }
 

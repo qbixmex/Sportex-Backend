@@ -10,6 +10,7 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -17,6 +18,7 @@ import { CustomPagesService } from './custom-pages.service.js';
 import { CreateCustomPageDto } from './dto/create-custom-page.dto.js';
 import { UpdateCustomPageDto } from './dto/update-custom-page.dto.js';
 
+@ApiTags('Custom Pages')
 @Controller('admin/custom-pages')
 @Auth(VALID_ROLES.ADMIN)
 export class CustomPagesController {

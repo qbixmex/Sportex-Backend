@@ -37,11 +37,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
 
     if (!user) {
-      throw new UnauthorizedException('¡ Token no válido !');
+      throw new UnauthorizedException('Token no válido');
     }
 
     if (!user.isActive) {
-      throw new UnauthorizedException('¡ El usuario está inactivo !');
+      throw new UnauthorizedException('El usuario está inactivo');
     }
 
     return user;

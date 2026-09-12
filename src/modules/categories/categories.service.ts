@@ -56,11 +56,7 @@ export class CategoriesService {
     }
 
     if (!category) {
-      throw new NotFoundException(
-        '¡ La categoría '
-        + (isUUID(id) ? 'id ' : 'enlace permanente ')
-        + `[${id}] no existe en la base de datos !`
-      );
+      throw new NotFoundException('La categoría no existe con el identificador proporcionado');
     }
 
     return {
@@ -75,7 +71,7 @@ export class CategoriesService {
 
     if (categoryNameCount > 0) {
       throw new BadRequestException(
-        `¡ La categoría con el nombre (${dto.name}) ya existe, elija otro !`
+        `La categoría con el nombre (${dto.name}) ya existe, elija otro`
       );
     }
 
@@ -86,7 +82,7 @@ export class CategoriesService {
 
       if (categoryPermalinkCount > 0) {
         throw new BadRequestException(
-          `¡ La categoría con el nombre permanente (${dto.permalink}) ya existe, elija otro !`
+          `La categoría con el nombre permanente (${dto.permalink}) ya existe, elija otro`
         );
       }
     }
@@ -97,7 +93,7 @@ export class CategoriesService {
       await this.categoryRepository.save(newCategory);
 
       return {
-        message: '¡ Categoría creada satisfactoriamente 👍 !',
+        message: 'Categoría creada satisfactoriamente',
         category: newCategory,
       };
     } catch (error) {
@@ -112,7 +108,7 @@ export class CategoriesService {
 
     if (!category) {
       throw new NotFoundException(
-        `¡ La categoría con id: [${id}], no existe en la base de datos !`
+        'La categoría no existe con el identificador proporcionado'
       );
     }
 
@@ -122,7 +118,7 @@ export class CategoriesService {
       await this.categoryRepository.save(updatedCategory);
 
       return {
-        message: 'Categoría actualizada exitosamente 👍',
+        message: 'Categoría actualizada exitosamente',
         category: updatedCategory,
       }
     } catch (error) {
@@ -137,7 +133,7 @@ export class CategoriesService {
 
     if (!category) {
       throw new NotFoundException(
-        `La categoría con id: [${id}], no existe en la base de datos`
+        'La categoría no existe con el identificador proporcionado'
       );
     }
 
@@ -145,7 +141,7 @@ export class CategoriesService {
       await this.categoryRepository.delete({ id: category.id });
 
       return {
-        message: 'Categoría eliminada satisfactoriamente 👍',
+        message: 'Categoría eliminada satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

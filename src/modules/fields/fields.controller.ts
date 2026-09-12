@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { FieldsService } from './fields.service.js';
 import { CreateFieldDto, UpdateFieldDto } from './dto/index.js';
 import { Auth } from '../auth/decorators/auth.decorator.js';
@@ -17,6 +18,7 @@ import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Fields')
 @Controller('fields')
 export class FieldsController {
   constructor(private readonly fieldsService: FieldsService) {}

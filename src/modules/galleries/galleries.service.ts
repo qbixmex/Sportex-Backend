@@ -47,7 +47,7 @@ export class GalleriesService {
 
     if (!gallery) {
       throw new NotFoundException(
-        `¡ La galería con id: [${id}], no existe en la base de datos !`
+        'La galería no existe con el identificador proporcionado'
       );
     }
 
@@ -61,7 +61,7 @@ export class GalleriesService {
 
     if (!permalink) {
       throw new BadRequestException(
-        '¡ El enlace permanente no puede quedar vacío después de normalizarse !'
+        'El enlace permanente no puede quedar vacío después de normalizarse'
       );
     }
 
@@ -71,7 +71,7 @@ export class GalleriesService {
 
     if (existingGallery) {
       throw new ConflictException(
-        `¡ La galería con el enlace permanente [${permalink}] ya existe, elija otro título !`
+        `La galería con el enlace permanente [${permalink}] ya existe, elija otro título`
       );
     }
 
@@ -84,7 +84,7 @@ export class GalleriesService {
       await this.galleryRepository.save(gallery);
 
       return {
-        message: '¡ Galería creada satisfactoriamente 👍 !',
+        message: 'Galería creada satisfactoriamente',
         gallery,
       };
     } catch (error) {
@@ -99,7 +99,7 @@ export class GalleriesService {
 
     if (!gallery) {
       throw new NotFoundException(
-        `¡ La galería con id: [${id}], no existe en la base de datos !`
+        'La galería no existe con el identificador proporcionado'
       );
     }
 
@@ -111,7 +111,7 @@ export class GalleriesService {
 
       if (!permalink) {
         throw new BadRequestException(
-          '¡ El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú" !'
+          'El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú"'
         );
       }
 
@@ -135,7 +135,7 @@ export class GalleriesService {
 
       if (existingGallery && existingGallery.id !== id) {
         throw new ConflictException(
-          `¡ La galería con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink !`
+          `La galería con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink`
         );
       }
     }
@@ -146,7 +146,7 @@ export class GalleriesService {
       await this.galleryRepository.save(updatedGallery);
 
       return {
-        message: '¡ Galería actualizada exitosamente 👍 !',
+        message: 'Galería actualizada exitosamente',
         gallery: updatedGallery,
       };
     } catch (error) {
@@ -161,7 +161,7 @@ export class GalleriesService {
 
     if (!gallery) {
       throw new NotFoundException(
-        `¡ La galería con id: [${id}], no existe en la base de datos !`
+        'La galería no existe con el identificador proporcionado'
       );
     }
 
@@ -169,7 +169,7 @@ export class GalleriesService {
       await this.galleryRepository.remove(gallery);
 
       return {
-        message: '¡ Galería eliminada satisfactoriamente !',
+        message: 'Galería eliminada satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

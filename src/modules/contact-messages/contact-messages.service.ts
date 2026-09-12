@@ -44,7 +44,7 @@ export class ContactMessagesService {
 
     if (!contactMessage) {
       throw new NotFoundException(
-        `¡ El mensaje de contacto con id: [${id}], no existe en la base de datos !`
+        'El mensaje de contacto no existe con el identificador proporcionado'
       );
     }
 
@@ -60,7 +60,7 @@ export class ContactMessagesService {
       await this.contactMessageRepository.save(contactMessage);
 
       return {
-        message: '¡ Mensaje de contacto enviado satisfactoriamente 👍 !',
+        message: 'Mensaje de contacto enviado satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -75,7 +75,7 @@ export class ContactMessagesService {
       await this.contactMessageRepository.save(contactMessage);
 
       return {
-        message: '¡ Estado de lectura actualizado exitosamente 👍 !',
+        message: 'Estado de lectura actualizado exitosamente',
         contactMessage,
       };
     } catch (error) {
@@ -90,7 +90,7 @@ export class ContactMessagesService {
       await this.contactMessageRepository.remove(contactMessage);
 
       return {
-        message: '¡ Mensaje de contacto eliminado satisfactoriamente 👍 !',
+        message: 'Mensaje de contacto eliminado satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

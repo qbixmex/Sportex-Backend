@@ -26,6 +26,6 @@ export class CommonService {
     } else {
       this.logger.error(error);
     }
-    throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    throw new InternalServerErrorException('Error desconocido, revisa los logs para mas información');
   }
 }

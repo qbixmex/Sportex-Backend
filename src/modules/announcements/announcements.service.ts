@@ -51,13 +51,13 @@ export class AnnouncementsService {
 
     if (!announcement) {
       throw new NotFoundException(
-        `¡ El anuncio con id: [${id}], no existe en la base de datos !`
+        'El anuncio no existe con el identificador proporcionado'
       );
     }
 
     if (active === true && !announcement.active) {
       throw new NotFoundException(
-        `¡ El anuncio con id: [${id}], no está publicado !`
+        `El anuncio con id: [${id}], no está publicado`
       );
     }
 
@@ -71,7 +71,7 @@ export class AnnouncementsService {
 
     if (!permalink) {
       throw new BadRequestException(
-        '¡ El enlace permanente no puede quedar vacío después de normalizarse !'
+        'El enlace permanente no puede quedar vacío después de normalizarse'
       );
     }
 
@@ -81,7 +81,7 @@ export class AnnouncementsService {
 
     if (existingAnnouncement) {
       throw new ConflictException(
-        `¡ El anuncio con el enlace permanente [${permalink}] ya existe, elija otro título o permalink !`
+        `El anuncio con el enlace permanente [${permalink}] ya existe, elija otro título o permalink`
       );
     }
 
@@ -105,7 +105,7 @@ export class AnnouncementsService {
 
     if (!announcement) {
       throw new NotFoundException(
-        `¡ El anuncio con id: [${id}], no existe en la base de datos !`
+        'El anuncio no existe con el identificador proporcionado'
       );
     }
 
@@ -141,7 +141,7 @@ export class AnnouncementsService {
 
       if (existingAnnouncement && existingAnnouncement.id !== id) {
         throw new ConflictException(
-          `¡ El anuncio con el enlace permanente [${updateData.permalink}] ya existe, elija otro título o permalink !`
+          `El anuncio con el enlace permanente [${updateData.permalink}] ya existe, elija otro título o permalink`
         );
       }
     }
@@ -155,7 +155,7 @@ export class AnnouncementsService {
       await this.announcementRepository.save(updatedAnnouncement);
 
       return {
-        message: '¡ Anuncio actualizado exitosamente 👍 !',
+        message: 'Anuncio actualizado exitosamente',
         announcement: updatedAnnouncement,
       };
     } catch (error) {
@@ -170,7 +170,7 @@ export class AnnouncementsService {
 
     if (!announcement) {
       throw new NotFoundException(
-        `¡ El anuncio con id: [${id}], no existe en la base de datos !`
+        'El anuncio no existe con el identificador proporcionado'
       );
     }
 
