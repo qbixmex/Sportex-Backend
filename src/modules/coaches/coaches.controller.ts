@@ -10,12 +10,14 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CoachesService } from './coaches.service.js';
 import { CreateCoachDto, UpdateCoachDto } from './dto/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 
+@ApiTags('Coaches')
 @Auth(VALID_ROLES.ADMIN)
 @Controller('coaches')
 export class CoachesController {

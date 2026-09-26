@@ -10,6 +10,7 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { HeroBannersService } from './hero-banners.service.js';
 import { CreateHeroBannerDto, UpdateHeroBannerDto } from './dto/index.js';
@@ -17,6 +18,7 @@ import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Hero Banners')
 @Controller('hero-banners')
 export class HeroBannersController {
   constructor(private readonly heroBannersService: HeroBannersService) {}

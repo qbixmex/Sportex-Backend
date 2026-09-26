@@ -98,11 +98,7 @@ export class TournamentsService {
     const tournament = await queryBuilder.getOne();
 
     if (!tournament) {
-      throw new NotFoundException(
-        '¡ El torneo con '
-         + (isUUID(id) ? 'id ' : 'enlace permanente ')
-         + `[${id}] no existe en la base de datos !`
-      );
+      throw new NotFoundException('El torneo no existe con el identificador proporcionado');
     }
 
     const teamsCountRow = await this.tournamentRepository
@@ -127,7 +123,7 @@ export class TournamentsService {
 
     if (tournamentNameCount > 0) {
       throw new BadRequestException(
-        `¡ El torneo con el nombre (${dto.name}) ya existe, elija otro !`
+        `El torneo con el nombre (${dto.name}) ya existe, elija otro`
       );
     }
 
@@ -138,7 +134,7 @@ export class TournamentsService {
 
       if (tournamentPermalinkCount > 0) {
         throw new BadRequestException(
-          `¡ El torneo con el nombre permanente (${dto.permalink}) ya existe, elija otro !`
+          `El torneo con el nombre permanente (${dto.permalink}) ya existe, elija otro`
         );
       }
     }
@@ -149,7 +145,7 @@ export class TournamentsService {
       await this.tournamentRepository.save(newTournament);
 
       return {
-        message: '¡ Torneo creado satisfactoriamente 👍 !',
+        message: 'Torneo creado satisfactoriamente',
         tournament: newTournament,
       };
     } catch (error) {
@@ -164,7 +160,7 @@ export class TournamentsService {
 
     if (!tournament) {
       throw new NotFoundException(
-        `¡ El torneo con id: [${id}], no existe en la base de datos !`
+        'El torneo no existe con el identificador proporcionado'
       );
     }
 
@@ -174,7 +170,7 @@ export class TournamentsService {
       await this.tournamentRepository.save(updatedTournament);
 
       return {
-        message: 'Torneo actualizado exitosamente 👍',
+        message: 'Torneo actualizado exitosamente',
         tournament: updatedTournament,
       }
     } catch (error) {
@@ -189,7 +185,7 @@ export class TournamentsService {
 
     if (!tournament) {
       throw new NotFoundException(
-        `El torneo con id: [${id}], no existe en la base de datos`
+        'El torneo no existe con el identificador proporcionado'
       );
     }
 
@@ -197,7 +193,7 @@ export class TournamentsService {
       await this.tournamentRepository.delete({ id: tournament.id });
 
       return {
-        message: 'Torneo eliminado satisfactoriamente 👍',
+        message: 'Torneo eliminado satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

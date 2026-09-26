@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
@@ -70,12 +70,10 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+      throw new NotFoundException('El usuario no existe con el identificador proporcionado')
     }
 
-    return {
-      user
-    };
+    return { user };
   }
 
   async findByUsername(username: string) {
@@ -97,11 +95,11 @@ export class UserService {
 
       if (!user) {
         throw new NotFoundException(
-          `¡ No se encuentra el usuario con su nombre de usuario: [${username}], en la base de datos !`
+          `No se encuentra el usuario con el nombre de usuario`
         )
       }
 
-      return user;
+      return { user };
     } catch (error) {
       this.commonService.handleExceptions(error);
     }
@@ -110,6 +108,14 @@ export class UserService {
   async create(dto: CreateUserDto) {
     try {
       const { password, ...userData } = dto;
+
+      const userExists = await this.userRepository.count({
+        where: { email: userData.email }
+      });
+
+      if (userExists > 0) {
+        throw new ConflictException('El usuario con el email proporcionado ya existe');
+      }
 
       const newUser = this.userRepository.create({
         email: userData.email,
@@ -123,7 +129,7 @@ export class UserService {
       await this.userRepository.save(newUser);
 
       return {
-        message: 'Usuario creado satisfactoriamente 👍',
+        message: 'Usuario creado satisfactoriamente',
         user: {
           id: newUser.id,
           name: newUser.name,
@@ -150,9 +156,7 @@ export class UserService {
       .getOne();
 
     if (!user) {
-      throw new NotFoundException(
-        `¡ El usuario con id: [${id}], no existe en la base de datos !`
-      );
+      throw new NotFoundException('El usuario no existe con el identificador proporcionado');
     }
 
     const { password, ...dtoWithoutPassword } = dto;
@@ -177,9 +181,9 @@ export class UserService {
       ) as Omit<User, 'password'>;
 
       return {
-        message: 'Usuario actualizado exitosamente 👍',
+        message: 'Usuario actualizado exitosamente',
         user: outputUser,
-      }
+      };
     } catch (error) {
       this.commonService.handleExceptions(error);
     }
@@ -202,14 +206,14 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`);
+      throw new NotFoundException('El usuario no existe con el identificador proporcionado');
     }
 
     try {
       await this.userRepository.delete({ id: user.id });
 
       return {
-        message: 'Usuario eliminado satisfactoriamente 👍',
+        message: 'Usuario eliminado satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);

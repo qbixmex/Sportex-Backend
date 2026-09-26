@@ -47,7 +47,7 @@ export class VideosService {
 
     if (!video) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        'El video no existe con el identificador proporcionado'
       );
     }
 
@@ -61,7 +61,7 @@ export class VideosService {
 
     if (!permalink) {
       throw new BadRequestException(
-        '¡ El enlace permanente no puede quedar vacío después de normalizarse !'
+        'El enlace permanente no puede quedar vacío después de normalizarse'
       );
     }
 
@@ -71,7 +71,7 @@ export class VideosService {
 
     if (existingVideo) {
       throw new ConflictException(
-        `¡ El video con el enlace permanente [${permalink}] ya existe, elija otro título !`
+        `El video con el enlace permanente [${permalink}] ya existe, elija otro título`
       );
     }
 
@@ -84,7 +84,7 @@ export class VideosService {
       await this.videoRepository.save(video);
 
       return {
-        message: '¡ Video creado satisfactoriamente 👍 !',
+        message: 'Video creado satisfactoriamente',
         video,
       };
     } catch (error) {
@@ -99,7 +99,7 @@ export class VideosService {
 
     if (!video) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        'El video no existe con el identificador proporcionado'
       );
     }
 
@@ -111,7 +111,7 @@ export class VideosService {
 
       if (!permalink) {
         throw new BadRequestException(
-          '¡ El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú" !'
+          'El enlace permanente no puede llevar emojis, caracteres especiales ó acentos en vocales "áéíóú"'
         );
       }
 
@@ -135,7 +135,7 @@ export class VideosService {
 
       if (existingVideo && existingVideo.id !== id) {
         throw new ConflictException(
-          `¡ El video con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink !`
+          `El video con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink`
         );
       }
     }
@@ -146,7 +146,7 @@ export class VideosService {
       await this.videoRepository.save(updatedVideo);
 
       return {
-        message: '¡ Video actualizado exitosamente 👍 !',
+        message: 'Video actualizado exitosamente',
         video: updatedVideo,
       };
     } catch (error) {
@@ -161,7 +161,7 @@ export class VideosService {
 
     if (!video) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        'El video no existe con el identificador proporcionado'
       );
     }
 
@@ -169,7 +169,7 @@ export class VideosService {
       await this.videoRepository.remove(video);
 
       return {
-        message: '¡ Video eliminado satisfactoriamente !',
+        message: 'Video eliminado satisfactoriamente',
         video,
       };
     } catch (error) {

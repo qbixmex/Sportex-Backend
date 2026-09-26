@@ -56,7 +56,7 @@ Uses the OpenSpec workflow (`schema: spec-driven`) for spec-first development.
 - Only `UserController` is gated by `ApiKeyMiddleware` (registered in `app.module.ts`). Most controllers use the `@Auth(role)` decorator + JWT guards from `src/auth/`.
 - Modules per feature in `src/` (e.g. `users/`, `tournaments/`, `categories/`, `auth/`, `common/`).
 - `src/common/dto/pagination.dto.ts` is the shared pagination DTO with `DEFAULT_LIMIT`.
-- Global `ValidationPipe` and `TransformInterceptor` (`src/utils/transform.interceptor.ts`) are applied in `main.ts`.
+- Global `ValidationPipe` is applied in `main.ts`. Responses are **not** wrapped: services return raw data and the HTTP status (`res.ok`/`res.status`) carries the status code. Custom `message` fields returned by services (e.g. create/update/delete) are part of the contract.
 - `public/` is served statically via `@nestjs/serve-static`.
 - Path aliases: `@/*` → `src/*`, `~/*` → repo root.
 

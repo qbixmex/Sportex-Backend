@@ -68,7 +68,7 @@ export class PlayersService {
 
     if (!player) {
       throw new NotFoundException(
-        `¡ El jugador con id: [${id}], no existe en la base de datos !`
+        'El jugador no existe con el identificador proporcionado'
       );
     }
 
@@ -96,7 +96,7 @@ export class PlayersService {
       await this.playerRepository.save(newPlayer);
 
       return {
-        message: '¡ Jugador creado satisfactoriamente 👍 !',
+        message: 'Jugador creado satisfactoriamente',
         data: newPlayer,
       };
     } catch (error) {
@@ -109,7 +109,7 @@ export class PlayersService {
 
     if (!player) {
       throw new NotFoundException(
-        `¡ El jugador con id: [${id}], no existe en la base de datos !`
+        'El jugador no existe con el identificador proporcionado'
       );
     }
 
@@ -132,7 +132,7 @@ export class PlayersService {
       await this.playerRepository.save(updatedPlayer);
 
       return {
-        message: 'Jugador actualizado exitosamente 👍',
+        message: 'Jugador actualizado exitosamente',
         player: updatedPlayer,
       };
     } catch (error) {
@@ -145,7 +145,7 @@ export class PlayersService {
 
     if (!player) {
       throw new NotFoundException(
-        `El jugador con id: [${id}], no existe en la base de datos`
+        'El jugador no existe con el identificador proporcionado'
       );
     }
 
@@ -153,7 +153,7 @@ export class PlayersService {
       await this.playerRepository.delete({ id: player.id });
 
       return {
-        message: 'Jugador eliminado satisfactoriamente 👍',
+        message: 'Jugador eliminado satisfactoriamente',
         data: player,
       };
     } catch (error) {
@@ -168,7 +168,7 @@ export class PlayersService {
 
     if (!team) {
       throw new BadRequestException(
-        `¡ El equipo con id [${teamId}] no existe, elija otro !`
+        'El equipo no existe con el identificador proporcionado'
       );
     }
   }

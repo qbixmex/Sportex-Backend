@@ -85,11 +85,7 @@ export class FieldsService {
     });
 
     if (!fieldRaw) {
-      throw new NotFoundException(
-        '¡ La cancha con '
-         + (isUUID(id) ? 'id ' : 'enlace permanente ')
-         + `[${id}] no existe en la base de datos !`
-      );
+      throw new NotFoundException('La cancha no existe con el identificador proporcionado');
     }
 
     const { fieldTeams, ...field } = fieldRaw;
@@ -108,7 +104,7 @@ export class FieldsService {
 
       if (permalinkCount > 0) {
         throw new BadRequestException(
-          `¡ La cancha con el enlace permanente (${dto.permalink}) ya existe, elija otro !`
+          `La cancha con el enlace permanente (${dto.permalink}) ya existe, elija otro`
         );
       }
     }
@@ -130,7 +126,7 @@ export class FieldsService {
       }
 
       return {
-        message: '¡ Cancha creada satisfactoriamente 👍 !',
+        message: 'Cancha creada satisfactoriamente',
         data: newField,
       };
     } catch (error) {
@@ -145,7 +141,7 @@ export class FieldsService {
 
     if (!field) {
       throw new NotFoundException(
-        `¡ La cancha con id: [${id}], no existe en la base de datos !`
+        'La cancha no existe con el identificador proporcionado'
       );
     }
 
@@ -156,7 +152,7 @@ export class FieldsService {
 
       if (permalinkCount > 0) {
         throw new BadRequestException(
-          `¡ La cancha con el enlace permanente (${dto.permalink}) ya existe, elija otro !`
+          `La cancha con el enlace permanente (${dto.permalink}) ya existe, elija otro`
         );
       }
     }
@@ -180,7 +176,7 @@ export class FieldsService {
       }
 
       return {
-        message: 'Cancha actualizada exitosamente 👍',
+        message: 'Cancha actualizada exitosamente',
         data: updatedField,
       };
     } catch (error) {
@@ -195,7 +191,7 @@ export class FieldsService {
 
     if (!field) {
       throw new NotFoundException(
-        `La cancha con id: [${id}], no existe en la base de datos`
+        'La cancha no existe con el identificador proporcionado'
       );
     }
 
@@ -204,7 +200,7 @@ export class FieldsService {
       await this.fieldRepository.delete({ id: field.id });
 
       return {
-        message: 'Cancha eliminada satisfactoriamente 👍',
+        message: 'Cancha eliminada satisfactoriamente',
         data: field,
       };
     } catch (error) {

@@ -95,11 +95,7 @@ export class TeamsService {
     const team = await queryBuilder.getOne();
 
     if (!team) {
-      throw new NotFoundException(
-        '¡ El equipo con '
-         + (isUUID(id) ? 'id ' : 'enlace permanente ')
-         + `[${id}] no existe en la base de datos !`
-      );
+      throw new NotFoundException('El equipo no existe con el identificador proporcionado');
     }
 
     return team;
@@ -136,7 +132,7 @@ export class TeamsService {
       await this.teamRepository.save(newTeam);
 
       return {
-        message: '¡ Equipo creado satisfactoriamente 👍 !',
+        message: 'Equipo creado satisfactoriamente',
         data: newTeam,
       };
     } catch (error) {
@@ -149,7 +145,7 @@ export class TeamsService {
 
     if (!team) {
       throw new NotFoundException(
-        `¡ El equipo con id: [${id}], no existe en la base de datos !`
+        'El equipo no existe con el identificador proporcionado'
       );
     }
 
@@ -175,7 +171,7 @@ export class TeamsService {
       await this.teamRepository.save(updatedTeam);
 
       return {
-        message: 'Equipo actualizado exitosamente 👍',
+        message: 'Equipo actualizado exitosamente',
         data: updatedTeam,
       };
     } catch (error) {
@@ -188,7 +184,7 @@ export class TeamsService {
 
     if (!team) {
       throw new NotFoundException(
-        `El equipo con id: [${id}], no existe en la base de datos`
+        'El equipo no existe con el identificador proporcionado'
       );
     }
 
@@ -196,7 +192,7 @@ export class TeamsService {
       await this.teamRepository.delete({ id: team.id });
 
       return {
-        message: 'Equipo eliminado satisfactoriamente 👍',
+        message: 'Equipo eliminado satisfactoriamente',
         data: team,
       };
     } catch (error) {
@@ -211,7 +207,7 @@ export class TeamsService {
 
     if (!tournament) {
       throw new BadRequestException(
-        `¡ El torneo con id [${tournamentId}] no existe, elija otro !`
+        'El torneo no existe con el identificador proporcionado'
       );
     }
   }
@@ -223,7 +219,7 @@ export class TeamsService {
 
     if (!category) {
       throw new BadRequestException(
-        `¡ La categoría con id [${categoryId}] no existe, elija otra !`
+        'La categoría no existe con el identificador proporcionado'
       );
     }
   }

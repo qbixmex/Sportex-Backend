@@ -10,6 +10,7 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TournamentsService } from './tournaments.service.js';
 import { CreateTournamentDto, UpdateTournamentDto } from './dto/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -17,6 +18,7 @@ import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 
 @Controller('tournaments')
+@ApiTags('Tournaments')
 @Auth(VALID_ROLES.ADMIN)
 export class TournamentsController {
   constructor(private readonly tournamentsService: TournamentsService) {}

@@ -35,7 +35,7 @@ export class SponsorsService {
 
     if (!sponsor) {
       throw new NotFoundException(
-        `¡ El patrocinador con id: [${id}], no existe en la base de datos !`
+        'El patrocinador no existe con el identificador proporcionado'
       );
     }
 
@@ -49,7 +49,7 @@ export class SponsorsService {
 
     if (existingSponsor) {
       throw new ConflictException(
-        `¡ El patrocinador con el nombre [${dto.name}] ya existe, elija otro !`
+        `El patrocinador con el nombre [${dto.name}] ya existe, elija otro`
       );
     }
 
@@ -67,7 +67,7 @@ export class SponsorsService {
 
     if (!sponsor) {
       throw new NotFoundException(
-        `¡ El patrocinador con id: [${id}], no existe en la base de datos !`
+        'El patrocinador no existe con el identificador proporcionado'
       );
     }
 
@@ -77,7 +77,7 @@ export class SponsorsService {
       await this.sponsorRepository.save(updatedSponsor);
 
       return {
-        message: 'Patrocinador actualizado exitosamente 👍',
+        message: 'Patrocinador actualizado exitosamente',
         sponsor: updatedSponsor,
       };
     } catch (error) {
@@ -90,7 +90,7 @@ export class SponsorsService {
 
     if (!sponsor) {
       throw new NotFoundException(
-        `¡ El patrocinador con el id [${id}], no existe en la base de datos !`
+        'El patrocinador no existe con el identificador proporcionado'
       );
     }
 
@@ -98,7 +98,7 @@ export class SponsorsService {
       await this.sponsorRepository.remove(sponsor);
 
       return {
-        message: 'Patrocinador eliminado satisfactoriamente 👍',
+        message: 'Patrocinador eliminado satisfactoriamente',
         sponsor,
       };
     } catch (error) {

@@ -10,6 +10,7 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
@@ -17,8 +18,9 @@ import { GalleryImagesService } from './gallery-images.service.js';
 import { CreateGalleryImageDto } from './dto/create-gallery-image.dto.js';
 import { UpdateGalleryImageDto } from './dto/update-gallery-image.dto.js';
 
-@Controller('galleries/:galleryId/images')
 @Auth(VALID_ROLES.ADMIN)
+@ApiTags('Gallery Images')
+@Controller('galleries/:galleryId/images')
 export class GalleryImagesController {
   constructor(private readonly galleryImagesService: GalleryImagesService) {}
 

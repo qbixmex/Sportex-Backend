@@ -54,7 +54,7 @@ export class CustomPageImagesService {
 
     if (!customPageImage) {
       throw new NotFoundException(
-        `¡ La imagen de página personalizada con id: [${id}], no existe en la base de datos !`
+        'La imagen de página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -74,7 +74,7 @@ export class CustomPageImagesService {
       const customPageImage = this.stripParentPage(customPageImageRaw);
 
       return {
-        message: '¡ Imagen de página personalizada creada satisfactoriamente 👍 !',
+        message: 'Imagen de página personalizada creada satisfactoriamente',
         customPageImage,
       };
     } catch (error) {
@@ -91,7 +91,7 @@ export class CustomPageImagesService {
 
     if (!customPageImage) {
       throw new NotFoundException(
-        `¡ La imagen de página personalizada con id: [${id}], no existe en la base de datos !`
+        'La imagen de página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -104,7 +104,7 @@ export class CustomPageImagesService {
       await this.customPageImageRepository.save(updatedCustomPageImage);
 
       return {
-        message: '¡ Imagen de página personalizada actualizada exitosamente 👍 !',
+        message: 'Imagen de página personalizada actualizada exitosamente',
         customPageImage: this.stripParentPage(updatedCustomPageImage),
       };
     } catch (error) {
@@ -121,7 +121,7 @@ export class CustomPageImagesService {
 
     if (!customPageImage) {
       throw new NotFoundException(
-        `¡ La imagen de página personalizada con id: [${id}], no existe en la base de datos !`
+        'La imagen de página personalizada no existe con el identificador proporcionado'
       );
     }
 
@@ -129,7 +129,7 @@ export class CustomPageImagesService {
       await this.customPageImageRepository.remove(customPageImage);
 
       return {
-        message: '¡ Imagen de página personalizada eliminada satisfactoriamente 👍 !',
+        message: 'Imagen de página personalizada eliminada satisfactoriamente',
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -153,7 +153,7 @@ export class CustomPageImagesService {
 
     if (!customPage) {
       throw new NotFoundException(
-        `¡ La página personalizada con id: [${pageId}], no existe en la base de datos !`
+        'La página personalizada no existe con el identificador proporcionado'
       );
     }
 
