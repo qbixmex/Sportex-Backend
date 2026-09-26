@@ -15,20 +15,25 @@ async function bootstrap() {
     .setTitle('Sportex RESTFul API')
     .setDescription('Sports management platform')
     .setVersion('1')
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'token',
-        description: 'Introduce tu token JWT',
-        in: 'header',
-      },
-      'token',
-    )
+    // .addBearerAuth(
+    //   {
+    //     type: 'http',
+    //     scheme: 'bearer',
+    //     bearerFormat: 'JWT',
+    //     name: 'token',
+    //     description: 'Introduce tu token JWT',
+    //     in: 'header',
+    //   },
+    //   'token',
+    // )
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('documentation', app, document, { useGlobalPrefix: true });
+  SwaggerModule.setup('docs', app, document, {
+    useGlobalPrefix: true,
+    swaggerOptions: {
+      supportedSubmitMethods: [],
+    },
+  });
   /* ========================================================= */
 
   await app.listen(process.env.PORT ?? 4000);
