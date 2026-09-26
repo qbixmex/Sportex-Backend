@@ -1,17 +1,11 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Column } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
 
-export class Auth {
+export class AuthResponseDto {
   @ApiProperty({
     example: 'john@gmail.com',
     description: 'Correo electrónico del usuario',
     nullable: false,
     uniqueItems: true,
-  })
-  @Column({
-    type: 'varchar',
-    name: 'email',
-    unique: true,
   })
   email!: string;
 
@@ -20,11 +14,6 @@ export class Auth {
     description: 'Contraseña del usuario',
     nullable: false,
     uniqueItems: true,
-  })
-  @Column({
-    type: 'varchar',
-    name: 'password',
-    select: false,
   })
   password!: string;
 }
